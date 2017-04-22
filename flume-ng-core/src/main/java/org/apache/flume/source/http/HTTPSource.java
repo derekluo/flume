@@ -94,6 +94,9 @@ public class HTTPSource extends AbstractSource implements
   private HTTPSourceHandler handler;
   private SourceCounter sourceCounter;
 
+  // Added responseBody
+  private volatile String resp;
+
   // SSL configuration variable
   private volatile String keyStorePath;
   private volatile String keyStorePassword;
@@ -110,6 +113,8 @@ public class HTTPSource extends AbstractSource implements
       port = context.getInteger(HTTPSourceConfigurationConstants.CONFIG_PORT);
       host = context.getString(HTTPSourceConfigurationConstants.CONFIG_BIND,
           HTTPSourceConfigurationConstants.DEFAULT_BIND);
+
+      resp = context.getString(HTTPSourceConfigurationConstants.RESPONSE_BODY, "");
 
       Preconditions.checkState(host != null && !host.isEmpty(),
                 "HTTPSource hostname specified is empty");
@@ -277,6 +282,7 @@ public class HTTPSource extends AbstractSource implements
       }
       response.setCharacterEncoding(request.getCharacterEncoding());
       response.setStatus(HttpServletResponse.SC_OK);
+      response.getWriter().write(resp);
       response.flushBuffer();
       sourceCounter.incrementAppendBatchAcceptedCount();
       sourceCounter.addToEventAcceptedCount(events.size());

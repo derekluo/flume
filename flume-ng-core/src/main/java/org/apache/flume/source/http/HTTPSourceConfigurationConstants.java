@@ -18,6 +18,8 @@
 
 package org.apache.flume.source.http;
 
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+
 /**
  *
  */
@@ -38,5 +40,8 @@ public class HTTPSourceConfigurationConstants {
   public static final String SSL_KEYSTORE_PASSWORD = "keystorePassword";
   public static final String SSL_ENABLED = "enableSSL";
   public static final String EXCLUDE_PROTOCOLS = "excludeProtocols";
+
+  //Added response body
+  public static final String RESPONSE_BODY = "responseBody";
 
 }
